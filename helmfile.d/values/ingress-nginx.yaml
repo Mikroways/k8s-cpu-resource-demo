@@ -1,0 +1,13 @@
+controller:
+  hostPort:
+    enabled: true
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  nodeSelector:
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/control-plane: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      effect: "NoSchedule"

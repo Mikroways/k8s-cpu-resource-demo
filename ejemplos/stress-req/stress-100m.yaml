@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stress-100-cpu
+  labels:
+    app: stress
+spec:
+  selector:
+    matchLabels:
+      stress-area: stress-100CPU
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        stress-area: stress-100CPU
+    spec:
+      tolerations:
+        - key: stress
+          operator: "Exists"
+          effect: "NoSchedule"
+      nodeSelector:
+        kubernetes.io/hostname: mw-cpu-resources-worker-1
+      containers:
+      - name: stress
+        image: progrium/stress
+        args:
+          - "--cpu"
+          - "4"
+        resources:
+          requests:
+            cpu: "100m"

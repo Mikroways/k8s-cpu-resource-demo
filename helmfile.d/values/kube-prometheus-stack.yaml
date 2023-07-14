@@ -1,0 +1,32 @@
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+grafana:
+  adminPassword: mikroways
+  grafana.ini:
+    server:
+      domain: mw-cpu-resources-ctlplane-0
+      root_url: "%(protocol)s://%(domain)s/grafana"
+      serve_from_sub_path: true
+  dashboards:
+    infraestructure:
+      nginx-ingress:
+        url: https://raw.githubusercontent.com/Mikroways/grafana-dashboards/master/ingress/kubernetes-ingress-controller.json
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - disableDeletion: false
+        editable: false
+        folder: Infraestructura
+        name: infraestructure
+        options:
+          path: /var/lib/grafana/dashboards/infraestructure
+        type: file
+
+  ingress:
+    ingressClassName: nginx
+    enabled: true
+    path: /grafana
+    hosts:
+      - mw-cpu-resources-ctlplane-0

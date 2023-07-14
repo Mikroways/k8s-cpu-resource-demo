@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stress-no-resources
+  labels:
+    app: stress
+spec:
+  selector:
+    matchLabels:
+      stress-area: stress-no-resources
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        stress-area: stress-no-resources
+    spec:
+      tolerations:
+        - key: stress
+          operator: "Exists"
+          effect: "NoSchedule"
+      nodeSelector:
+        kubernetes.io/hostname: mw-cpu-resources-worker-1
+      containers:
+      - name: stress
+        image: progrium/stress
+        args:
+          - "--cpu"
+          - "4"

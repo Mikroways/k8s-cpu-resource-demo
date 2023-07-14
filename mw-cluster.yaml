@@ -1,0 +1,15 @@
+cluster: mw-cpu-resources
+ctlplanes: 1
+image: ubuntu2204
+network: default
+numcpus: 2
+memory: 2048
+api_ip: 192.168.122.252
+workers: 2
+wait_ready: True
+version: 1.25.11
+engine: crio
+multus: false
+ingress: false
+sdn: cilium
+nfs: false
